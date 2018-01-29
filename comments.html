@@ -1,0 +1,44 @@
+<div class="modal container fade comment-modal-container" id="commentModal-@Model.PostID" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" id="comments">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="comments-title">Comments</h4>
+                <h4>@Model.Caption</h4>
+            </div>
+            <div class="model-body">
+                <div class="form-group" style="display: block; max-width: 400px; margin: 10px auto 10px; position: relative;">
+                    <input class="form-control travelogue-comment" id="new-post-comment-@Model.PostID"
+                           type="text" style="margin-bottom: 0px" placeholder="Your comments" oninput="checkCommentLength(@Model.PostID)" maxlength="700" />
+                    <button id="user-newsfeed-comment-btn" class="btn" onclick="addComment('@Model.PostID')">Add</button>
+                    <div class="no-comment-error" id="no-comment-error-@Model.PostID" style="display: inline-block;">
+
+                    </div>
+
+                </div>
+
+                <div class="model-body">
+                    <div id="current-comments-@Model.PostID">
+                        @Html.Action("GetAllComments", new { Id = Model.PostID })
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+function checkCommentLength(id) {
+    var comment = $('#new-post-comment-' + id).val();
+    if (comment.length >= 700) {
+        $('#no-comment-error-' + id).text('0 characters remaining').show();
+        $('#no-comment-error-' + id).css('color', 'red');
+    } else if (comment.length >= 0) {
+        var remaining = 700 - comment.length;
+        $('#no-comment-error-' + id).text(remaining + ' characters remaining').show();
+        $('#no-comment-error-' + id).css('color', 'black');
+    }
+}
+</script>
